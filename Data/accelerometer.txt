@@ -1,28 +1,3 @@
-# Accelerometer Data File
-# Started @Wed Mar 21 12:51:21 EDT 2018
-#
-#
-# sensor Vendor: STMicroelectronics
-# sensor Name: LSM6DSL Accelerometer
-# sensor Resolution: 0.0023956299m/sec^2; Max Range: 78.4532; Min Delay: 2500 microseconds
-# The sensor's attributes are the result hardware and the Android capabilities.
-# It means that the Android may not utilize all features provided by the hardware.
-#
-# Some devices and Android versions save battery too much so the device may go to sleep.
-# It just happens after couple of minutes from turning off the scree and it is easy to find it out.
-#
-# The following file provides the data from accelerometer in the m/s^2 format.
-# The diff value is just a time delta between the samples
-#
-#
-# data format:
-# so we have 4 columns with values separated by the " "
-# X Y Z time_from_previous_sample(ms)
-
-# sensor speed set to:FASTEST
-# units set to: m/sec^2
-# gravity NOT filtered out
-# Accuracy: HIGH
 0.564 2.51 9.748 0
 0.557 2.517 9.75 2
 0.538 2.548 9.781 2
