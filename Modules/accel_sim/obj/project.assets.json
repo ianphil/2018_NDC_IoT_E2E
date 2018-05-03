@@ -7629,28 +7629,33 @@
     ]
   },
   "packageFolders": {
-    "/home/tdr/.nuget/packages/": {},
-    "/usr/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "C:\\Users\\ianphil\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/tdr/src/GrandmaFallDown/Modules/accel_sim/accel_sim.csproj",
+      "projectUniqueName": "C:\\src\\GrandmaFallDown\\Modules\\accel_sim\\accel_sim.csproj",
       "projectName": "accel_sim",
-      "projectPath": "/home/tdr/src/GrandmaFallDown/Modules/accel_sim/accel_sim.csproj",
-      "packagesPath": "/home/tdr/.nuget/packages/",
-      "outputPath": "/home/tdr/src/GrandmaFallDown/Modules/accel_sim/obj/",
+      "projectPath": "C:\\src\\GrandmaFallDown\\Modules\\accel_sim\\accel_sim.csproj",
+      "packagesPath": "C:\\Users\\ianphil\\.nuget\\packages\\",
+      "outputPath": "C:\\src\\GrandmaFallDown\\Modules\\accel_sim\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/home/tdr/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\ianphil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

@@ -10,11 +10,12 @@ namespace accel_sim
     using System.Threading.Tasks;
     using Microsoft.Azure.Devices.Client;
     using Microsoft.Azure.Devices.Client.Transport.Mqtt;
+    using Microsoft.Azure.Devices.Shared;
     using Newtonsoft.Json;
 
     class Program
     {
-        static bool fall;
+        static bool fall = false;
 
         static async Task Main(string[] args)
         {
@@ -90,7 +91,47 @@ namespace accel_sim
             await ioTHubModuleClient.OpenAsync();
             Console.WriteLine("IoT Hub module client initialized.");
 
-            await SendAccelMessage(ioTHubModuleClient);
+            var moduleTwin = await ioTHubModuleClient.GetTwinAsync();
+            var moduleTwinCollection = moduleTwin.Properties.Desired;
+            if (moduleTwinCollection["fall"] != null)
+            {
+                fall = moduleTwinCollection["fall"];
+            }
+
+            await ioTHubModuleClient.SetDesiredPropertyUpdateCallbackAsync(onDesiredPropertiesUpdate, null);
+
+            while (true)
+            {
+                await SendAccelMessage(ioTHubModuleClient);
+                Thread.Sleep(500);
+            }
+        }
+
+        private static Task onDesiredPropertiesUpdate(TwinCollection desiredProperties, object userContext)
+        {
+            try
+            {
+                Console.WriteLine("Desired property change:");
+                Console.WriteLine(JsonConvert.SerializeObject(desiredProperties));
+
+                if (desiredProperties["fall"]!=null)
+                    fall = desiredProperties["fall"];
+
+            }
+            catch (AggregateException ex)
+            {
+                foreach (Exception exception in ex.InnerExceptions)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Error when receiving desired property: {0}", exception);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Error when receiving desired property: {0}", ex.Message);
+            }
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -100,48 +141,65 @@ namespace accel_sim
         /// </summary>
         static async Task<MessageResponse> SendAccelMessage(object userContext)
         {
-            fall = false;
-
-            if (!fall)
-            {
-                
-            }
-
             var deviceClient = userContext as DeviceClient;
             if (deviceClient == null)
             {
                 throw new InvalidOperationException("UserContext doesn't contain " + "expected values");
             }
 
-            byte[] messageBytes = message.GetBytes();
-            string messageString = Encoding.UTF8.GetString(messageBytes);
-            Console.WriteLine($"Received message: {counterValue}, Body: [{messageString}]");
-
-            if (!string.IsNullOrEmpty(messageString))
+            if (!fall)
             {
+                Accelerometer acc = new Accelerometer();
+                acc.X = GetRandomNumber();
+                acc.Z = GetRandomNumber();
+                acc.Y  = .5;
+                acc.Id = "contosodevice";
+
+                byte[] messageBytes = Encoding.UTF8.GetBytes(acc.ToString());
+
                 var pipeMessage = new Message(messageBytes);
-                foreach (var prop in message.Properties)
-                {
-                    pipeMessage.Properties.Add(prop.Key, prop.Value);
-                }
-                await deviceClient.SendEventAsync("output1", pipeMessage);
-                Console.WriteLine("Received message sent");
+
+                await deviceClient.SendEventAsync("accelout", pipeMessage);
+                Console.WriteLine("Stable message sent");
             }
+            else
+            {
+                Accelerometer acc = new Accelerometer();
+                acc.X = GetRandomNumber();
+                acc.Z = GetRandomNumber();
+                acc.Y  = .1;
+                acc.Id = "contosodevice";
+
+                byte[] messageBytes = Encoding.UTF8.GetBytes(acc.ToString());
+
+                var pipeMessage = new Message(messageBytes);
+
+                await deviceClient.SendEventAsync("accelout", pipeMessage);
+                Console.WriteLine("Fall message sent");
+
+                fall = false;
+            }
+
             return MessageResponse.Completed;
         }
 
-        public int GetRandomNumber()
+        static public double GetRandomNumber()
         {
             Random random = new Random();
-            return random.Next(-1, 1);
+            return random.NextDouble();
         }
     }
 
     public class Accelerometer
     {
-        public int Id { get; set; }
-        public decimal X { get; set; }
-        public decimal Y { get; set; }
-        public decimal Z { get; set; }
+        public string Id { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Z { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }
