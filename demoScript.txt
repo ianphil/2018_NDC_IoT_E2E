@@ -1,0 +1,39 @@
+Things
+	Iot Edge
+		Runtime
+			iotedgectl
+		Docker
+			Modules
+		Code
+			Sim code
+			module twin code
+	IoT Hub
+		Portal
+		Fall Script
+
+Actions
+	Databricks
+		Cluster
+		Notebook
+		Code
+			IoT Conn - Github
+	Event Hub
+		Portal
+	Functions
+		Portal
+		Code -
+			EH Conn
+			Message
+
+Insights
+	Teams
+	Botframework v4
+		Code - 
+			Main
+			Conversation/Cards
+	Luis
+		Intents - 
+			GetActivity
+		Code - 
+			Middleware
+			GetActivity
