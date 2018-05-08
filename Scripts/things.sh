@@ -12,7 +12,7 @@ az webapp create --name ndccontosobot --resource-group ndccontoso --plan ndccont
 # az extension add --name azure-cli-iot-ext
 az iot hub device-identity create --device-id contosodevice --hub-name ndccontosohub --edge-enabled
 
-iotedgectl setup --connection-string "HostName=ndccontosohub.azure-devices.net;DeviceId=contosodevice;SharedAccessKey=OuAPw9Ghq5ckRONCyzsjPHjIzOlA50vQ2DVDs44ZCK0=" --nopass
+iotedgectl setup --connection-string "<your conn string>" --nopass
 ndccontosoreg.azurecr.io/accel_sim:0.0.1-amd64
 
 az iot hub apply-configuration --device-id contosodevice --hub-name ndccontosohub --content "C:\src\GrandmaFallDown\Modules\accel_sim\deployment.json"

@@ -1,1 +1,1 @@
-iotedgectl setup --connection-string "HostName=contosohub.azure-devices.net;DeviceId=contosodevice;SharedAccessKey=nfmP+RRDMi5yyvU9VBV6MTK+zn1C0QhlJr2sqCya9rg=" --nopass
+iotedgectl setup --connection-string "<your conn string>" --nopass
